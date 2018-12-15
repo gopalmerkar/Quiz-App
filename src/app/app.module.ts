@@ -18,7 +18,6 @@ import { CommonModule } from '@angular/common';
     HttpClientModule,
     CommonModule,
     FormsModule
-
   ],
   providers: [QuizService],
   bootstrap: [AppComponent]
