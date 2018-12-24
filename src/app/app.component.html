@@ -3,30 +3,42 @@
 
 <div class="container">
   <h2 style="text-align: center">Quiz Application</h2>
-  <form *ngFor="let row of quizes;let i = index" class="form">
-    <div  class="form-question row"> 
-      <div>{{row[counter].Question}}</div>
-       <!-- <div class="col-sm-8">
-          <label for="question">Question:</label>
-          <input type="question" class="form-control" id="question" name="question"> 
-       </div> -->
-    </div>  
-    <div class="question_option" *ngFor="let opt of ">
-        <div class="row"> 
-          <div class="col-sm-4">
-              <!-- <input id="ans_option" type="radio" name="genderControl" value="genderControl" />
-              <label class="radio-label"></label> -->
-          </div>
+  <form #quizForm="ngForm" class="form">
+    <div *ngFor="let row of quizes;let i = index">
+      <div class="row">
+        <div>{{row[counter].Question}}</div>
+        <input type="text" style="display:none" [(ngModel)]="row[counter].Question" name="question">
+      </div>
+      <div *ngFor="let answer of row[counter].Control.MetaData; let j = index">
+        <div *ngIf="row[counter].Control.Type == 'Picker'" class="row">
+          <div class="col-md-4">
+              <label class="radio-inline">
+                  <input type="radio" [(ngModel)]="option"  [value]="answer.Value" name="option[j]">&nbsp;{{answer.Value}}
+                </label>
+          </div>         
         </div>
-    </div>
+      </div>
+  
+      <div *ngIf="row[counter].Control.Type == 'Slider'" class="row">
+          <div class="col-md-4">
+              <input type="range"  [(ngModel)]="option" [value]="slide.Value" name="option[j]" min="1" max="100" value="50" >{{slide.Value}}
+          </div>          
+        </div>  
+      </div>       
+      
+    
+    
+   <!-- <div *ngFor="let slide of row[counter].Control.MetaData; let j = index">  -->
+        
+      <!-- </div>  -->
+    <!-- <div *ngFor="let row of answers ">
+      <div *ngFor="let option of row.Control.MetaData">
+        <p>{{option.Value}}</p>
+      </div> 
+    </div> -->
+
     <br>
-      <button class="btn btn-lg btn-danger mr-3" (click)="previousQuestion()">Previous Question</button>
-      <button class="btn btn-lg btn-info" (click)="nextQuestion()">Next Question</button>
+    <button class="btn btn-lg btn-danger mr-3" (click)="previousQuestion()">Previous Question</button>
+    <button class="btn btn-lg btn-info" (click)="nextQuestion(quizForm.value)">Next Question</button>
   </form>
 </div>
-
-		
-      
-  
-
-	
