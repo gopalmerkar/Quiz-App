@@ -7,23 +7,29 @@
     <div *ngFor="let row of quizes;let i = index">
       <div class="row">
         <div>{{row[counter].Question}}</div>
-        <input type="text" style="display:none" [(ngModel)]="row[counter].Question" name="question">
+        <input type="text" style="display:none" [(ngModel)]="row[counter].Question"  name="question">
       </div>
       <div *ngFor="let answer of row[counter].Control.MetaData; let j = index">
         <div *ngIf="row[counter].Control.Type == 'Picker'" class="row">
           <div class="col-md-4">
               <label class="radio-inline">
-                  <input type="radio" [(ngModel)]="option"  [value]="answer.Value" name="option[j]">&nbsp;{{answer.Value}}
+                  <input type="radio" [(ngModel)]="option"  (ngModelChange)="onChange($event,row[counter],counter)"  [value]="answer.Value" name="option[j]">&nbsp;{{answer.Value}}
                 </label>
           </div>         
         </div>
       </div>
   
-      <div *ngIf="row[counter].Control.Type == 'Slider'" class="row">
+      <div *ngIf="row[counter].Control.Type == 'Slider'" class="row"> 
           <div class="col-md-4">
-              <input type="range"  [(ngModel)]="option" [value]="slide.Value" name="option[j]" min="1" max="100" value="50" >{{slide.Value}}
-          </div>          
+              <label class="radio-inline">
+              <input type="range"  [(ngModel)]="option" (ngModelChange)="onChange($event,row[counter],counter)" [value]="slide.Value" name="option[j]" min="0" max="100" value="0" >{{option}}
+            </label>
+         
+            </div>          
         </div>  
+        <br>
+        <button class="btn btn-lg btn-danger mr-3" (click)="previousQuestion(counter)">Previous Question</button>
+        <button class="btn btn-lg btn-info" (click)="nextQuestion(quizForm.value)">Next Question</button>
       </div>       
       
     
@@ -37,8 +43,6 @@
       </div> 
     </div> -->
 
-    <br>
-    <button class="btn btn-lg btn-danger mr-3" (click)="previousQuestion()">Previous Question</button>
-    <button class="btn btn-lg btn-info" (click)="nextQuestion(quizForm.value)">Next Question</button>
+  
   </form>
 </div>
